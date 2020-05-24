@@ -18,7 +18,8 @@
  * Encoder, but adding support for multiples could be done quickly in the fashion used in the 
  * Quadrature Encoder library: https://github.com/Saeterncj/QuadratureEncoder/blob/master/QuadratureEncoder.cpp
  * 
- */
+****************************************************************************************************************/
+
 #ifndef _RENCODER_H
 #define _RENCODER_H
 

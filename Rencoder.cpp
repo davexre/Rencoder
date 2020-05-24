@@ -1,4 +1,4 @@
-/**************************************************************************************************
+/****************************************************************************************************************
  *
  * Rencoder.cpp
  * Author: Dave Re
@@ -32,7 +32,7 @@
  * the switch with this scheme. Instead, the code below uses the internal pullup resistor
  * and just toggles the switch state.
  * 
- */
+ ****************************************************************************************************************/
 
 #include "./Rencoder.h"
 
@@ -73,21 +73,49 @@ void Encoder::encoderSetup(uint8_t a, uint8_t b, uint8_t btn) {
 
 }
 
-
+/*
+ * getCount
+ *
+ * Returns the number of indents that the encoder has been twisted. 
+ *
+ */
 int16_t Encoder::getCount() {
   return (count);
 }
 
+/*
+ * setCount
+ *
+ * Sets the current count to a specific value
+ *
+ */
 void Encoder::setCount(int16_t amount) {
   count = amount;
 }
 
+/*
+ * getDiff
+ *
+ * Returns the count difference vs. the last time getDiff was cleared. By default,
+ * calling getDiff clears the difference, too. Calling with clearValue = false
+ * will mimic a "peek" sort of Stream behavior, where it returns a value but
+ * preserves the current state.
+ *
+ */
 int16_t Encoder::getDiff(boolean clearValue) {
   int16_t diffReturn = diff;
   if (clearValue) diff = 0;
   return (diffReturn);
 }
 
+/*
+ * isMoved
+ *
+ * Has the encoder moved since the last time this was checked. By default, clears
+ * the flag. If clearValue is false, it will leave the flag intact, allowing a
+ * "peek" sort of behavior, where state is left intact after the call.
+ *
+ */
 boolean Encoder::isMoved(boolean clearValue) {
   boolean moved = statusRegister & (1 << statusEncoderMovedBit);
   if (clearValue) {
@@ -96,6 +124,14 @@ boolean Encoder::isMoved(boolean clearValue) {
   return (moved);
 }
 
+/*
+ * isPressed
+ *
+ * Button has been pressed down, starting a click
+ *
+ * Clears the flag by default, but will leave it if clearValue is false.
+ *
+ */
 boolean Encoder::isPressed(boolean clearValue) {
   boolean pressed = statusRegister & (1 << statusButtonPressedBit);
   if (clearValue) {
@@ -104,6 +140,14 @@ boolean Encoder::isPressed(boolean clearValue) {
   return (pressed);
 }
 
+/*
+ * isClicked
+ *
+ * Button has been pressed AND released, completing a click.
+ *
+ * Clears the flag by default, but will leave it if clearValue is false.
+ *
+ */
 boolean Encoder::isClicked(boolean clearValue) {
   boolean clicked = statusRegister & (1 << statusButtonClickedBit);
   if (clearValue) {
@@ -112,6 +156,14 @@ boolean Encoder::isClicked(boolean clearValue) {
   return (clicked);
 }
 
+/*
+ * isDoubleClicked
+ *
+ * Button has been clicked twice within ENCODER_DOUBLECLICKTIME microseconds.
+ *
+ * Clears the flag by default, but will leave it if clearValue is false.
+ *
+ */
 boolean Encoder::isDoubleClicked(boolean clearValue) {
   boolean doubleclicked = statusRegister & (1 << statusButtonDoubleClickedBit);
   if (clearValue) {
@@ -120,10 +172,22 @@ boolean Encoder::isDoubleClicked(boolean clearValue) {
   return (doubleclicked);
 }
 
+/*
+ * clear
+ *
+ * Clears the Moved, Pressed, Clicked, and DoubleClicked flags
+ *
+ */
 void Encoder::clear() {
   statusRegister = 0;
 }
 
+/*
+ * encoderInterrupt
+ *
+ * ISR for interrupts on the encoder pins
+ *
+ */
 void Encoder::encoderInterrupt() {
   byte MSB = digitalRead(pinA);
   byte LSB = digitalRead(pinB);
@@ -149,7 +213,12 @@ void Encoder::encoderInterrupt() {
 }
 
 
-
+/*
+ * buttonInterrupt
+ *
+ * ISR for interrupts on the button
+ *
+ */
 void Encoder::buttonInterrupt() {
   // we're here because the button pin has changed
   // remember, we're using a pullup resistor, here, so LOW = pressed
