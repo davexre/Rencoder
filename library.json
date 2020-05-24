@@ -1,0 +1,10 @@
+{
+  "name": "Rencoder",
+  "keywords": "encoder, signal, pulse, quadrature, button",
+  "description": "Rencoder is a simple, platform agnostic quadrature encoder library that supports click buttons",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/davexre/Rencoder/"
+  }
+}
