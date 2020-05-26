@@ -13,3 +13,10 @@ Unfortunately, I ran into some issues with using the Twist with my chosen SparkF
 a regular encoder. There's a lot of awesome libraries out there for encoders and certainly I didn't want to pollute the
 ecosphere with yet another one, but every one that I looked at was ATmega-ish specific, and would need a larger effort than I
 wanted to expend to supply support for the Apollo3 processor on my board. So, the "Re Encoder", or Rencoder library emerged. 
+
+## Encoder Brick
+
+If you don't have a way to hook up your encoder with debouncing circuitry, you might take a look at this board that I
+put together: https://github.com/davexre/Encoder-Brick
+
+OSH Park will make three of them for about $7.50. 
